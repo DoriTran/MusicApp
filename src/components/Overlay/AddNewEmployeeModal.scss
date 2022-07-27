@@ -1,0 +1,66 @@
+.modal-container {
+    padding: 25px;
+    background-color: #fff;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: flex-start;
+    background-color: #3f51b5;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 2.2rem;
+    text-align: center;
+    border-bottom: 1px solid darkblue;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+
+    .modal-info {
+        display: flex;
+        flex-direction: row;
+
+        .modal-single {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .modal-left {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 5px;
+        }
+
+        .modal-right {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+            margin-left: 5px;
+        }
+    }
+
+    .modal-button-group {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: 20px;
+        padding-left: 20px;
+    }
+}
+
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}

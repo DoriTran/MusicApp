@@ -1,0 +1,30 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 5rem;
+    width: 100%;
+    margin-top: 1rem;
+
+    &>.icon{
+        width: 2rem;
+        font-size: 1.5rem;
+    }
+    span {
+        font-size: 0.8rem;
+        color: gray;
+    }
+    input {
+        flex:1;
+        font-size: 1.5rem;
+        margin-top: 0.5rem;
+        width: 100%;
+        border: none;
+        background-color: transparent;
+        border-bottom: 1px solid gray;
+        padding: 0;
+        &:focus{
+            outline: none;
+        }
+    }
+}
