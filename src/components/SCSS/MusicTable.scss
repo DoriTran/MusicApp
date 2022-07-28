@@ -1,0 +1,98 @@
+.music-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+// Music table
+table {
+    border: 2px solid #666;
+    border-collapse: collapse;
+    line-height: 30px;
+    width: 90%;
+    margin-bottom: 50px;
+}
+
+tr:first-child {
+    background-color: #f2f2f2;
+    border: 2px solid #666;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody {
+    tr {
+
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 5%;
+            text-align: center;
+            border-right: 2px solid #666;
+        }
+
+        th:nth-child(2),
+        td:nth-child(2) {
+            text-align: left;
+            text-indent: 10px;
+            border-right: 2px solid #666;
+        }
+
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 30%;
+            text-align: left;
+            text-indent: 10px;
+            border-right: 2px solid #666;
+        }
+
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 15%;
+            text-align: center;
+        }
+    }
+
+    tr:last-child {
+        border-top: 2px solid #666;
+
+        td:first-child {
+            border: none;
+        }
+
+        .info-wrapper {
+            text-align: left;
+            text-indent: 10px;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .option-wrapper {
+            font-weight: bold;
+        }
+    }
+}
+
+.option-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 25%;
+}
+
+.input-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-end !important;
+    padding-right: 50px;
+    gap: 15%;
+}
+
+.page-input {
+    font-size: 18px;
+    text-indent: 5px;
+    width: 70px;
+}
