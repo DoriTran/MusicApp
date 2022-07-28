@@ -1,18 +1,23 @@
 .navbar-container {
-    display: block;
-    float: right;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
     padding-right: 20px;
+    width: 100%;
+    padding-top: 20px;
+    gap: 20px;
 
     .icon {
-        float: right;
-        padding-right: 10px;
+        font-size: 50px;
+        text-align: center;
     }
 
     .navbar-text {
-        font-size: 20px;
+        font-size: 30px;
+        vertical-align: middle;
     }
 
     .navbar-combobox {
-        font-size: 20px;
+        font-size: 25px;
     }
 }
