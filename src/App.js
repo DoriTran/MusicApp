@@ -9,10 +9,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/music" element={<Home/>} />
-        <Route path="/play/id=:musicID" element={<Home/>} />
-        <Route path="/add" element={<Home/>} />
-        <Route path="/edit/id=:musicID" element={<Home/>} />
+        <Route path="/music-management" element={<Home/>} />
         <Route path="*" element={<Home/>} />
       </Routes>
     </BrowserRouter>

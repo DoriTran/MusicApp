@@ -1,43 +1,23 @@
-import "./SCSS/Home.scss"
+import "./SCSS/Page.scss"
 
 import { useState } from "react"
 
-import Interact from "../components/Interact.js"
 import Navbar from "../components/Navbar.js"
-import MusicTable from "../components/MusicTable.js"
+import List from "./tabs/List.js"
+import Song from "./tabs/Song.js"
+import Add from "./tabs/Add.js"
+
 
 const Home = () => {
-    const [page, setPage] = useState(0)
-    const [each, setEach] = useState(10)
-    const [searchResult, setSearchResult] = useState([
-        {musicID: 1, name: "Bài hát số 1", genre: "Abc"},
-        {musicID: 2, name: "Bài hát số 2", genre: "Abc"},
-        {musicID: 3, name: "Bài hát số 3", genre: "Abc"},
-        {musicID: 4, name: "Bài hát số 4", genre: "Abc"},
-        {musicID: 5, name: "Bài hát số 5", genre: "Abc"},
-        {musicID: 6, name: "Bài hát số 6", genre: "Abc"},
-        {musicID: 7, name: "Bài hát số 7", genre: "Abc"},
-        {musicID: 8, name: "Bài hát số 8", genre: "Abc"},
-        {musicID: 9, name: "Bài hát số 9", genre: "Abc"},
-        {musicID: 10, name: "Bài hát số 10", genre: "Abc"},
-        {musicID: 11, name: "Bài hát số 11", genre: "Abc"},
-        {musicID: 12, name: "Bài hát số 12", genre: "Abc"},
-        {musicID: 13, name: "Bài hát số 13", genre: "Abc"},
-        {musicID: 14, name: "Bài hát số 14", genre: "Abc"},
-    ])
-
-    const [searchKey, setSearchKey] = useState("")
-    const [checkedID, setCheckedID] = useState([])
-    const [checkAll, setCheckAll] = useState(false)
+    const [pageInfo, setPageInfo] = useState({Status: "List", ID: 0})
 
     return (
-        <div className="home-container">
-            <Navbar/>
-            <Interact searchKey={searchKey} setSearchKey={setSearchKey}/>
-            <MusicTable searchResult={searchResult}
-                checkedID={checkedID} setCheckedID={setCheckedID}
-                checkAll={checkAll} setCheckAll={setCheckAll}
-            />
+        <div className="page-container">
+            <Navbar pageInfo={pageInfo} setPageInfo={setPageInfo}/>
+            {pageInfo.Status === "List" && <List setPageInfo={setPageInfo}/>}
+            {(pageInfo.Status === "Play" || pageInfo.Status === "Edit") 
+            && <Song pageInfo={pageInfo} setPageInfo={setPageInfo}/>}
+            {pageInfo.Status === "Add" && <Add setPageInfo={setPageInfo}/>}
         </div>
     )
 }

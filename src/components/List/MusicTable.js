@@ -1,6 +1,5 @@
 import "./SCSS/MusicTable.scss"
 
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPlay, faPencil } from "@fortawesome/free-solid-svg-icons"
 
@@ -48,21 +47,23 @@ const MusicTable = (props) => {
                                 <td>{music.genre}</td>
                                 <td>
                                     <div className="option-wrapper">
-                                        <Link to={`/play/id=${music.musicID}`}><FontAwesomeIcon className="info-button" icon={faPlay} /></Link>
-                                        <Link to={`/edit/id=${music.musicID}`}><FontAwesomeIcon className="delete-button" icon={faPencil} /></Link>
+                                        <FontAwesomeIcon className="action-link info-button" icon={faPlay} 
+                                            onClick={() => props.setPageInfo({Status: "Play", ID: music.musicID}) }/>
+                                        <FontAwesomeIcon className="action-link delete-button" icon={faPencil} 
+                                            onClick={() => props.setPageInfo({Status: "Edit", ID: music.musicID}) }/>
                                     </div>
                                 </td>
                             </tr>)
                         )
                     }
                     <tr>
-                        <td colspan="2">
+                        <td colSpan="2">
                             <div className="info-wrapper">
                                 <span>Total Items: 3</span>
                                 <span>Selected Items: 3</span>
                             </div>
                         </td>
-                        <td colspan="2">
+                        <td colSpan="2">
                             <div className="input-wrapper">
                                 <span>Page size: <input type="number" className="page-input"/></span>
                                 <input type="number" className="page-input"/>

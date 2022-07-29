@@ -4,15 +4,13 @@ import { useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSearch } from "@fortawesome/free-solid-svg-icons"
 
-import { Link } from "react-router-dom";
-
 const Interact = (props) => {
     const [isDeleteOpen, setDeleteStatus] = useState(false)
 
     return (
         <div className="interact-container">
             <div className="button-wrapper">
-                <Link to="/add"><button>Add</button></Link>
+                <button onClick={() => props.setPageInfo({Status: "Add"})}>Add</button>
                 <button onClick={() => setDeleteStatus(true)}>Delete</button>
             </div>
             <div className="interact-searchbox">

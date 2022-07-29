@@ -1,0 +1,35 @@
+.navbar-container {
+
+    .navbar-left {
+        float: left;
+        padding-top: 30px;
+        padding-left: 50px;
+    }
+
+    .navbar-right {
+        float: right;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        padding-top: 20px;
+        padding-right: 20px;
+        gap: 20px;
+
+        .icon {
+            font-size: 50px;
+            text-align: center;
+        }
+
+        .navbar-text {
+            font-size: 30px;
+            vertical-align: middle;
+        }
+
+        .navbar-combobox {
+            font-size: 25px;
+        }
+    }
+
+
+}
