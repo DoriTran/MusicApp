@@ -5,7 +5,7 @@ import Dialog from '../Dialog/Dialog'
 import { useEffect } from "react"
 import { useMutation } from "react-query"
 
-import deleteMusic from "../../api-calls/music/deleteMusic"
+import deleteMusic from "../../api-calls/song/deleteSong"
 
 const DeleteMusicDialog = (props) => {
     // Delete handler
@@ -15,14 +15,14 @@ const DeleteMusicDialog = (props) => {
         if (mutateDeleteMusic.isSuccess) {
             props.setPageInfo({Status: 'List', ID: 0})
             props.onBackdropClick()
-            props.setCheckedID(prevCheckedIDs => prevCheckedIDs.filter(prevCheckedID => prevCheckedID !== props.music.musicID))
+            props.setCheckedID(prevCheckedIDs => prevCheckedIDs.filter(prevCheckedID => prevCheckedID !== props.music.songID))
             props.setCheckAll(false)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mutateDeleteMusic.isSuccess])
 
     const deleteHandler = () => {
-        mutateDeleteMusic.mutate(props.musicID)
+        mutateDeleteMusic.mutate(props.songID)
     }    
 
     return (

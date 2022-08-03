@@ -38,19 +38,19 @@ const MusicTable = (props) => {
                         <th>Actions</th>
                     </tr>
                     {
-                        props.searchResult.map(music => (
-                            <tr key={music.musicID}>
+                        props.songs.map(song => (
+                            <tr key={song.songID}>
                                 <td><input type="checkbox"
-                                    checked={props.checkedID.includes(music.musicID)}
-                                    onChange={() => handleCheck(music.musicID)} /></td>
-                                <td>{music.name}</td>
-                                <td>{music.genre}</td>
+                                    checked={props.checkedID.includes(song.songID)}
+                                    onChange={() => handleCheck(song.songID)} /></td>
+                                <td>{song.name}</td>
+                                <td>{song.genre}</td>
                                 <td>
                                     <div className="option-wrapper">
                                         <FontAwesomeIcon className="action-link info-button" icon={faPlay} 
-                                            onClick={() => props.setPageInfo({Status: "Play", ID: music.musicID}) }/>
+                                            onClick={() => props.setPageInfo({Status: "Play", ID: song.songID}) }/>
                                         <FontAwesomeIcon className="action-link delete-button" icon={faPencil} 
-                                            onClick={() => props.setPageInfo({Status: "Edit", ID: music.musicID}) }/>
+                                            onClick={() => props.setPageInfo({Status: "Edit", ID: song.songID}) }/>
                                     </div>
                                 </td>
                             </tr>)
@@ -59,14 +59,14 @@ const MusicTable = (props) => {
                     <tr>
                         <td colSpan="2">
                             <div className="info-wrapper">
-                                <span>Total Items: 3</span>
-                                <span>Selected Items: 3</span>
+                                <span>Total Items: {props.songs.length}</span>
+                                <span>Selected Items: {props.checkedID.length}</span>
                             </div>
                         </td>
                         <td colSpan="2">
                             <div className="input-wrapper">
-                                <span>Page size: <input type="number" className="page-input"/></span>
-                                <input type="number" className="page-input"/>
+                                <span>Page size: <input type="number" className="page-input" value={props.page} onChange={event => props.setPage(event.target.value)} /></span>
+                                <input type="number" className="page-input" value={props.pagesize} onChange={event => props.setPagesize(event.target.value)}/>
                             </div>
                         </td>
 

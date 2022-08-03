@@ -1,13 +1,13 @@
 import { API_URL } from "../api-url"
 import axios from 'axios'
 
-const deleteMusic = async(musicID) => {
+const deleteSong = async(songID) => {
     let res = null
     try {
         res = await axios({
             method: 'delete',
             url: API_URL + '',
-            data: musicID
+            data: songID
         })
         return res.data
     } catch (err) {
@@ -15,4 +15,4 @@ const deleteMusic = async(musicID) => {
     }
 }
 
-export default deleteMusic
+export default deleteSong

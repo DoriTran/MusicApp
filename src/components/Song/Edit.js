@@ -8,7 +8,7 @@ import { useEffect } from "react"
 import DeleteMusicDialog from "../Overlay/DeleteMusicDialog"
 
 const Edit = (props) => {
-    const [info, setInfo] = useState({ musicID: 1, name: "Bài hát số 1", genre: "Music", lastUpdate: "23:15 2022-07-24" })
+    const [info, setInfo] = useState({ songID: 1, name: "Bài hát số 1", genre: "Music", lastUpdate: "23:15 2022-07-24" })
     const [isOpenDeleteDialog, setOpenDeleteDialog] = useState(false)
 
     useEffect(()=>{

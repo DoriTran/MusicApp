@@ -2,42 +2,47 @@ import "../SCSS/Page.scss"
 
 import { useState } from "react"
 
+import { Alert, CircularProgress } from "@mui/material"
+
 import Interact from "../../components/List/Interact.js"
 import MusicTable from "../../components/List/MusicTable.js"
 
-const Home = (props) => {
-    const [page, setPage] = useState(0)
-    const [each, setEach] = useState(10)
-    const [searchResult, setSearchResult] = useState([
-        {musicID: 1, name: "Bài hát số 1", genre: "Abc"},
-        {musicID: 2, name: "Bài hát số 2", genre: "Abc"},
-        {musicID: 3, name: "Bài hát số 3", genre: "Abc"},
-        {musicID: 4, name: "Bài hát số 4", genre: "Abc"},
-        {musicID: 5, name: "Bài hát số 5", genre: "Abc"},
-        {musicID: 6, name: "Bài hát số 6", genre: "Abc"},
-        {musicID: 7, name: "Bài hát số 7", genre: "Abc"},
-        {musicID: 8, name: "Bài hát số 8", genre: "Abc"},
-        {musicID: 9, name: "Bài hát số 9", genre: "Abc"},
-        {musicID: 10, name: "Bài hát số 10", genre: "Abc"},
-        {musicID: 11, name: "Bài hát số 11", genre: "Abc"},
-        {musicID: 12, name: "Bài hát số 12", genre: "Abc"},
-        {musicID: 13, name: "Bài hát số 13", genre: "Abc"},
-        {musicID: 14, name: "Bài hát số 14", genre: "Abc"},
-    ])
+import { useQuery } from "react-query"
+import getSong from "../../api-calls/song/getSong"
 
+
+const Home = (props) => {
+    // Page state
+    const [page, setPage] = useState(1)
+    const [pagesize, setPagesize] = useState(10)
     const [searchKey, setSearchKey] = useState("")
+
+    // Functional state
     const [checkedID, setCheckedID] = useState([])
     const [checkAll, setCheckAll] = useState(false)
 
-    return (
-        <div className="page-container">
-            <Interact searchKey={searchKey} setSearchKey={setSearchKey} setPageInfo={props.setPageInfo}/>
-            <MusicTable searchResult={searchResult} setPageInfo = {props.setPageInfo}
-                checkedID={checkedID} setCheckedID={setCheckedID}
-                checkAll={checkAll} setCheckAll={setCheckAll}
-            />
-        </div>
-    )
+    // Query data
+    const { isLoading, isError, refetch, data: songs} 
+        = useQuery('getSong', () => getSong({page: page, pagesize: pagesize, searchKey: searchKey}))
+
+    if (isLoading) {
+        return <div className="page-container"><CircularProgress size={'150px'}/></div>
+    } else if (isError) {
+        return <div className="page-container"><Alert severity="error">Error getting song data</Alert></div>
+    } else {
+        return (
+            <div className="page-container">
+                <Interact searchKey={searchKey} setSearchKey={setSearchKey} setPageInfo={props.setPageInfo}/>
+                <MusicTable songs={songs} setPageInfo = {props.setPageInfo}
+                    page={page} setPage={setPage}
+                    pagesize={pagesize} setPagesize={setPagesize}
+                    checkedID={checkedID} setCheckedID={setCheckedID}
+                    checkAll={checkAll} setCheckAll={setCheckAll}
+                    refetch={refetch}
+                />
+            </div>
+        )
+    }
 }
 
 export default Home
