@@ -1,12 +1,12 @@
 import { API_URL } from "../api-url"
 import axios from 'axios'
 
-const deleteSong = async(arrID) => {
+const deleteArrSong = async(arrID) => {
     let res = null
     try {
         res = await axios({
             method: 'delete',
-            url: API_URL + '/delete/allByArrId',
+            url: API_URL + '/song/delete/allByArrId',
             data: arrID
         })
         return res.data
@@ -15,4 +15,4 @@ const deleteSong = async(arrID) => {
     }
 }
 
-export default deleteSong
+export default deleteArrSong

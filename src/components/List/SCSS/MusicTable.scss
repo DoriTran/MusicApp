@@ -7,23 +7,24 @@
 
 // Music table
 table {
-    border: 2px solid #666;
     border-collapse: collapse;
+    border: 2px solid #666;
     line-height: 30px;
     width: 90%;
     margin-bottom: 50px;
 }
 
-tr:first-child {
-    background-color: #f2f2f2;
-    border: 2px solid #666;
-}
 
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
 
 tbody {
+    tr:first-child {
+        background-color: #f2f2f2;
+        border-bottom: 2px solid #666;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
     tr {
 
         th:nth-child(1),
@@ -52,6 +53,7 @@ tbody {
         td:nth-child(4) {
             width: 15%;
             text-align: center;
+            border: none
         }
     }
 
@@ -103,4 +105,8 @@ tbody {
 
 .action-link:hover {
     color: rgb(98, 117, 145);
+}
+
+input[type=number]::-webkit-inner-spin-button {
+    opacity: 1
 }

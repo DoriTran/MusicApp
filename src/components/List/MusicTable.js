@@ -1,18 +1,33 @@
 import "./SCSS/MusicTable.scss"
 
+import { useEffect } from "react"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPlay, faPencil } from "@fortawesome/free-solid-svg-icons"
 
 const MusicTable = (props) => {
+
+    // Handle checking
+    const isCheckAll = () => {
+        const totalChecked = props.songs.filter(song => props.checkedID.includes(song.songID)).length
+        if (totalChecked === props.songs.length) return true
+        else return false
+    }
+    
+    useEffect(() => {
+        props.setCheckAll(isCheckAll())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.checkedID]);
+
     const handleCheckAll = () => {
         props.setCheckAll(!props.checkAll);
-        let PageEmployeeNo = props.employees.map(employee => employee.no)
+        let SongID = props.songs.map(song => song.songID)
 
         if (!props.checkAll) {
-            let newCheckedNos = PageEmployeeNo.filter(checked => !props.checkedID.includes(checked))
-            props.setCheckedID(prev => [...prev, ...newCheckedNos])
+            let newCheckedIDs = SongID.filter(checked => !props.checkedID.includes(checked))
+            props.setCheckedID(prev => [...prev, ...newCheckedIDs])
         } else {
-            props.setCheckedID(prev => prev.filter(checked => !PageEmployeeNo.includes(checked)))
+            props.setCheckedID(prev => prev.filter(checked => !SongID.includes(checked)))
         }
     }
 
@@ -25,13 +40,47 @@ const MusicTable = (props) => {
         }
     }
 
+    // Handle input
+    const handlePagesizeInput = (value) => {
+        // Parse Int
+        if (isNaN(value)) return
+        value = parseInt(value)
+
+        // Check over maxsize input
+        if (value < 1) value = 1
+        
+        props.setPagesize(value)
+
+        // Check current page input reasonable with pagesize input
+        if (props.page > Math.ceil(props.total / value)) {
+            props.setPage(Math.ceil(props.total / value))
+        }
+    }
+
+    const handlePageInput = (value) => {
+        // Parse Int
+        if (isNaN(value)) return
+        value = parseInt(value)
+
+        // Check over range input
+        if (props.pagesize === 0) {
+            console.log("pagesize: " + props.pagesize)
+            props.setPage(1)
+            return
+        }
+        if (value > Math.ceil(props.total / props.pagesize)) value = Math.ceil(props.total / props.pagesize)
+        if (value < 1) value = 1
+
+        props.setPage(value)
+    }
+
     return (
         <div className="music-container">
             <table>
                 <tbody>
                     <tr>
                         <th><input type="checkbox" name="check_page"
-                            checked={props.checkAll}
+                            checked={isCheckAll()}
                             onChange={() => handleCheckAll()} /></th>
                         <th>Name</th>
                         <th>Genre</th>
@@ -59,14 +108,14 @@ const MusicTable = (props) => {
                     <tr>
                         <td colSpan="2">
                             <div className="info-wrapper">
-                                <span>Total Items: {props.songs.length}</span>
+                                <span>Total Items: {props.total}</span>
                                 <span>Selected Items: {props.checkedID.length}</span>
                             </div>
                         </td>
                         <td colSpan="2">
                             <div className="input-wrapper">
-                                <span>Page size: <input type="number" className="page-input" value={props.page} onChange={event => props.setPage(event.target.value)} /></span>
-                                <input type="number" className="page-input" value={props.pagesize} onChange={event => props.setPagesize(event.target.value)}/>
+                                <span>Page size: <input type="number" className="page-input" value={props.pagesize} onChange={event => handlePagesizeInput(event.target.value)} /></span>
+                                <span>Page: <input type="number" className="page-input" value={props.page} onChange={event => handlePageInput(event.target.value)} /></span>
                             </div>
                         </td>
 

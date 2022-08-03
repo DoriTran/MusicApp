@@ -3,8 +3,12 @@ import axios from 'axios'
 
 const getSong = async(fetchData) => {
     let res = null
-    console.log("getSong:")
-    console.log(fetchData)
+
+    if (isNaN(fetchData.page) || isNaN(fetchData.pagesize)) {
+        fetchData.page = 0
+        fetchData.pagesize = 0
+    }
+
     try {
         res = await axios({
             method: 'get',
