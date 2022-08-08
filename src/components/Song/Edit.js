@@ -3,46 +3,83 @@ import "./SCSS/Detail.scss"
 import { useState } from "react"
 import { Button } from "@mui/material"
 
-import { useEffect } from "react"
-
 import DeleteMusicDialog from "../Overlay/DeleteMusicDialog"
 
+import { API_URL } from "../../api-calls/api-url"
+
+import { useEffect } from "react"
+import { useMutation } from "react-query"
+import { useNavigate } from "react-router-dom"
+
+import updateSong from "../../api-calls/song/updateSong"
+
+import dateFormat from "dateformat"
+
 const Edit = (props) => {
-    const [info, setInfo] = useState({ songID: 1, name: "Bài hát số 1", genre: "Music", lastUpdate: "23:15 2022-07-24" })
+    const navigate = useNavigate()
+    
+    const [formData, setFormData] = useState(() => {
+        return {...props.song, image: null, audio: null,}
+    })
     const [isOpenDeleteDialog, setOpenDeleteDialog] = useState(false)
 
-    useEffect(()=>{
-        console.log(info)
-    }, [info])
+    const mutateEditSong = useMutation(updateSong)
+
+    useEffect(() => {
+        if (mutateEditSong.isSuccess) {
+            console.log("refect")
+            props.refetchDetail()
+            navigate("/songdetail/status=play/id=" + props.song.songID)
+        }
+    }, [mutateEditSong.isSuccess])
+
+    const submitSongHandler = e => {
+        e.preventDefault()
+        mutateEditSong.mutate(formData)
+    }
 
     return (
-        <div className="detail-container">
-            <div className="detail-wrapper">
-                <h5>Name:</h5>
-                <input className="input-name" value={info.name} onChange={event => setInfo({...info, name: event.target.value})}/>
+        <form className="detail-container" onSubmit={submitSongHandler}>
+            <div className="image-container">
+                <img src={API_URL + "/file/image/id=" + props.song.songID + "?" + new Date().getTime()} alt="song"/>
             </div>
-            <div className="detail-wrapper">
-                <h5>Genre:</h5>
-                <input className="input-genre" value={info.genre} onChange={event => setInfo({...info, genre: event.target.value})}/>
+            <div className="info-container">
+                <div className="detail-wrapper">
+                    <h5>Name:</h5>
+                    <input value={formData.name} onChange={event => setFormData({...formData, name: event.target.value})}/>
+                </div>
+                <div className="detail-wrapper">
+                    <h5>Genre:</h5>
+                    <input value={formData.genre} onChange={event => setFormData({...formData, genre: event.target.value})}/>
+                </div>
+                <div className="detail-wrapper">
+                    <h5>Vocalist:</h5>
+                    <input value={formData.vocalist} onChange={event => setFormData({...formData, vocalist: event.target.value})}/>
+                </div>
+                <div className="detail-wrapper">
+                    <h5>Image:</h5>
+                    <input type="file" onChange={event => setFormData({...formData, image: event.target.files[0]})}/>
+                </div>
+                <div className="detail-wrapper">
+                    <h5>Audio:</h5>
+                    <input type="file" onChange={event => setFormData({...formData, audio: event.target.files[0]})}/>
+                </div>
+                <div className="detail-wrapper">
+                    <h5>Last update:</h5>
+                    <span>{dateFormat(formData.lastUpdate)}</span>
+                </div> 
+                <div className="button-wrapper">
+                    <Button variant="contained" style={{ backgroundColor: "#d3dbdc", color: "black" }} type="submit">Save</Button>
+                    <Button variant="contained" style={{ backgroundColor: "#d3dbdc", color: "black" }} 
+                        onClick={() => setOpenDeleteDialog(true)}>
+                        Delete
+                    </Button>
+                </div>    
             </div>
-            <div className="detail-wrapper">
-                <h5>Last update:</h5>
-                <span>{info.lastUpdate}</span>
-            </div>
-            <div className="button-wrapper">
-                <Button variant="contained" style={{ backgroundColor: "#d3dbdc", color: "black" }} 
-                    onClick={() => props.setPageInfo(prevInfo => { return {...prevInfo, Status: "Play" }})}>
-                    Save
-                </Button>
-                <Button variant="contained" style={{ backgroundColor: "#d3dbdc", color: "black" }} 
-                    onClick={() => setOpenDeleteDialog(true)}>
-                    Delete
-                </Button>
-            </div>
+            
             {isOpenDeleteDialog && 
-                <DeleteMusicDialog music={info} onBackdropClick={() => setOpenDeleteDialog(false)}
-                    setPageInfo={props.setPageInfo}/>}
-        </div>
+                <DeleteMusicDialog music={props.song} onBackdropClick={() => setOpenDeleteDialog(false)}/>}
+        </form>
     )
 }
 

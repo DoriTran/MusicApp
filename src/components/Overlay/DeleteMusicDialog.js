@@ -4,16 +4,19 @@ import Dialog from '../Dialog/Dialog'
 
 import { useEffect } from "react"
 import { useMutation } from "react-query"
+import { useNavigate } from "react-router-dom"
 
 import deleteMusic from "../../api-calls/song/deleteSong"
 
 const DeleteMusicDialog = (props) => {
+    const navigate = useNavigate()
+
     // Delete handler
     const mutateDeleteMusic = useMutation(deleteMusic)
 
     useEffect(() => {
         if (mutateDeleteMusic.isSuccess) {
-            props.setPageInfo({Status: 'List', ID: 0})
+            navigate("/songlist")
             props.onBackdropClick()
             props.setCheckedID(prevCheckedIDs => prevCheckedIDs.filter(prevCheckedID => prevCheckedID !== props.music.songID))
             props.setCheckAll(false)

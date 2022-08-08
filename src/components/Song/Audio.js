@@ -1,9 +1,12 @@
 import "./SCSS/Audio.scss"
+import { API_URL } from "../../api-calls/api-url"
 
-const Audio = () => {
+import { useState, useEffect } from "react"
+
+const Audio = (props) => {
     return (
-        <audio controls className="audio-style">
-            <source src="https://www.computerhope.com/jargon/m/example.mp3" type="audio/ogg" />
+        <audio key={props.songID} autoPlay controls className="audio-style">
+            <source src={API_URL + "/file/audio/id=" + props.songID + "?" + new Date().getTime()} type="audio/mpeg" />
             Your browser does not support the audio element.
         </audio>
     )

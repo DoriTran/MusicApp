@@ -1,6 +1,7 @@
 import "./SCSS/MusicTable.scss"
 
 import { useEffect } from "react"
+import { Link } from "react-router-dom"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPlay, faPencil } from "@fortawesome/free-solid-svg-icons"
@@ -64,7 +65,6 @@ const MusicTable = (props) => {
 
         // Check over range input
         if (props.pagesize === 0) {
-            console.log("pagesize: " + props.pagesize)
             props.setPage(1)
             return
         }
@@ -96,10 +96,8 @@ const MusicTable = (props) => {
                                 <td>{song.genre}</td>
                                 <td>
                                     <div className="option-wrapper">
-                                        <FontAwesomeIcon className="action-link info-button" icon={faPlay} 
-                                            onClick={() => props.setPageInfo({Status: "Play", ID: song.songID}) }/>
-                                        <FontAwesomeIcon className="action-link delete-button" icon={faPencil} 
-                                            onClick={() => props.setPageInfo({Status: "Edit", ID: song.songID}) }/>
+                                        <Link to={`/songdetail/status=play/id=${song.songID}`}><FontAwesomeIcon className="action-link info-button" icon={faPlay} /></Link> 
+                                        <Link to={`/songdetail/status=edit/id=${song.songID}`}><FontAwesomeIcon className="action-link delete-button" icon={faPencil} /></Link>
                                     </div>
                                 </td>
                             </tr>)

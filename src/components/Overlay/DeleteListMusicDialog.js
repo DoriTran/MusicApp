@@ -13,7 +13,6 @@ const DeleteListMusicDialog = (props) => {
 
     useEffect(() => {
         if (mutateDeleteMusic.isSuccess) {
-            props.setPageInfo({Status: 'List'})
             props.onBackdropClick()
             props.setCheckedID([])
             props.setCheckAll(false)

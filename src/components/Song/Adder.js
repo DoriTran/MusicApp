@@ -3,36 +3,30 @@ import "./SCSS/Detail.scss"
 import { useState } from "react"
 import { Button } from "@mui/material"
 
-import { useEffect } from "react"
 import { useMutation } from "react-query"
 import addNewSong from "../../api-calls/song/addSong"
 
 import DeleteMusicDialog from "../Overlay/DeleteMusicDialog"
+import { useNavigate } from "react-router-dom"
 
 import dateFormat from "dateformat"
 
 const Adder = (props) => {
+    const navigate = useNavigate()
+
     const [formData, setFormData] = useState({ song: {name: "", genre: "",vocalist: "", lastUpdate: null}, image: null, audio: null})
     const [isOpenDeleteDialog, setOpenDeleteDialog] = useState(false)
 
     // Post
     const mutateAddNewSong = useMutation(addNewSong)
 
-    useEffect(()=>{ 
-        if (mutateAddNewSong.isSuccess) {            
-            //props.setPageInfo({Status: "Play", songID: formData.songId})
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [mutateAddNewSong.isSuccess]);
-
     const submitSongHandler = e => {
         e.preventDefault()
 
         mutateAddNewSong.mutate({ ...formData, song: {...formData.song, lastUpdate: dateFormat(new Date(), "yyyy-mm-dd hh:MM:ss")}},
             {
-                onCompleted: (data) => {
-                    console.log(data) // the response
-                    setFormData(data)
+                onSuccess: (response) => {
+                    navigate("/songdetail/status=play/id=" + response.data)
                 },
                 onError: (error) => {
                     console.log(error); // the error if that is the case
@@ -42,7 +36,7 @@ const Adder = (props) => {
     }
 
     return (
-        <form className="detail-container" onSubmit={submitSongHandler}>
+        <form className="info-container" onSubmit={submitSongHandler}>
             <div className="detail-wrapper">
                 <h5>Name:</h5>
                 <input className="input-long" required value={formData.song.name} onChange={event => setFormData({...formData, song: {...formData.song, name: event.target.value}})}/>
